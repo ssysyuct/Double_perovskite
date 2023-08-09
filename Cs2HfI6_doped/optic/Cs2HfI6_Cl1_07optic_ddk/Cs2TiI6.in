@@ -1,0 +1,88 @@
+ ndtset 6
+
+#First dataset : SC run with kpoints in the IBZ
+  nband1  42     
+  nstep1 200
+ kptopt1 1
+ nbdbuf1 0
+ prtden1 1   getden1 0   getwfk1 0    # Usual file handling data
+# getwfk_filepath1 "Cs2TiI6i_WFK"
+ 
+#Second dataset : NSC run with large number of bands, and points in the IBZ
+    iscf2 -2  
+   nstep2 200
+  kptopt2  1
+  getwfk2  1   getden2 1   # Usual file handling data
+
+#Third dataset : NSC run with large number of bands, and points in the full BZ 
+    iscf3 -2  
+   nstep3 100
+  getwfk3  2   getden3 1   # Usual file handling data
+
+
+#Fourth dataset : ddk response function along axis 1
+   iscf4 -3
+  nstep4  1  nline4  0  prtwf4  3   # Speed up the calculation : the first-order response wavefunction is not computed, only the matrix elements.
+
+   nqpt4  1  
+  rfdir4  1 0 0
+ rfelfd4  2
+
+#Fifth dataset : ddk response function along axis 2
+   iscf5 -3
+  nstep5  1  nline5  0   prtwf5  3   # Speed up the calculation : the first-order response wavefunction is not computed, only the matrix elements.
+
+   nqpt5  1  
+  rfdir5  0 1 0
+ rfelfd5  2
+
+#Sixth dataset : ddk response function along axis 3
+   iscf6 -3
+  nstep6  1  nline6  0    prtwf6  3   # Speed up the calculation : the first-order response wavefunction is not computed, only the matrix elements.
+
+   nqpt6  1  
+  rfdir6  0 0 1
+ rfelfd6  2
+
+# Data common to datasets 2-6
+  nband  100      # This number of bands might be too low for non-linear optics and real part of linear optics
+
+# Data common to datasets 3-6
+ kptopt   2      # Need points in the full BZ for non-linear optical properties
+
+# Data common to datasets 4-6
+  getwfk  3
+
+#Data common to all datasets
+ nshiftk 4
+ shiftk  0.5 0.5 0.5
+         0.5 0.0 0.0
+         0.0 0.5 0.0
+         0.0 0.0 0.5
+ ngkpt  6 6 6        # This is much too low : should be at least 24x24x24
+   qpt  0.0 0.0 0.0     # Not really needed, because it is the defaults, but mentioned here to keep track of its importance for datasets 4-6
+
+acell      1.5827843700E+01  1.6020280040E+01  1.5827843700E+01
+            rprim      0.0000000000E+00  6.9840389529E-01  7.1570384870E-01
+                       7.0710678119E-01  0.0000000000E+00  7.0710678119E-01
+                       7.1570384870E-01  6.9840389529E-01  0.0000000000E+00
+natom    9  
+ntypat   4
+typat 1 1 4 2 2 2 2 2 3   
+znucl    55 53 72 17
+             xred      2.4777957677E-01  2.5222042323E-01  2.4777957677E-01
+                       7.4777957677E-01  7.5222042323E-01  7.4777957677E-01
+                       7.8734578485E-01  2.1265421515E-01  7.8734578485E-01
+                       2.3741000298E-01  2.4211238509E-01  7.5788761491E-01
+                       7.5788761491E-01  7.6258999702E-01  2.3741000298E-01
+                       2.3979126558E-01  7.6020873442E-01  2.3979126558E-01
+                       2.3741000298E-01  7.6258999702E-01  7.5788761491E-01
+                       7.5788761491E-01  2.4211238509E-01  2.3741000298E-01
+                      -6.2672607525E-03  6.2672607525E-03 -6.2672607525E-03
+
+diemac 12.0
+ecut 16
+pawecutdg 40
+ixc -101130
+nbdbuf 2
+tolwfr 1.0d-18
