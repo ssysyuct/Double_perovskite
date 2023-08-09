@@ -1,0 +1,91 @@
+ndtset 10
+pawxcdev 0
+#k-points
+ngkpt 4 4 4
+nshiftk 4
+shiftk   0.0 0.0 0.5
+         0.0 0.5 0.0
+         0.5 0.0 0.0
+         0.5 0.5 0.5
+
+#lattice param
+ecut 16
+pawecutdg 40
+diemac 12.0
+acell      1.6056750671E+01  1.6056750671E+01  1.6056750671E+01
+typat    1 1 2 2 2 2 2 2 3  
+nband 42
+natom 9
+ntypat 3
+znucl    55 53 40  
+rprim      0.0000000000E+00  0.636396103071 0.636396103071
+           0.636396103071  0.0000000000E+00 0.636396103071
+           0.636396103071 0.636396103071 0.0000000000E+00  
+             xred      2.5000000000E-01  2.5000000000E-01  2.5000000000E-01
+                       7.5000000000E-01  7.5000000000E-01  7.5000000000E-01
+                       2.5831899723E-01  2.5831899723E-01  7.4168100277E-01
+                       7.4168100277E-01  7.4168100277E-01  2.5831899723E-01
+                       2.5831899723E-01  7.4168100277E-01  7.4168100277E-01
+                       7.4168100277E-01  2.5831899723E-01  7.4168100277E-01
+                       2.5831899723E-01  7.4168100277E-01  2.5831899723E-01
+                       7.4168100277E-01  2.5831899723E-01  2.5831899723E-01
+                       3.3207867522E-19 -7.1219514067E-22 -2.7373808425E-19
+
+
+#run type param
+iscf 7
+ixc -101130
+nstep 200
+
+#file io
+
+#DFPT step
+#Set 1 : ground state self-consistency
+getwfk1   0            # Cancel default
+kptopt1   1            # Automatic generation of k points, taking
+                       # into account the symmetry
+nqpt1   0            # Cancel default
+tolvrs1   1.0d-18      # SCF stopping criterion (modify default)
+rfphon1   0            # Cancel default
+
+#Set 2 Response function calculation of d/dk wave function
+iscf2   -3      # Need this non-self-consistent option for d/dk
+kptopt2   2          # Modify default to use time-reversal symmetry
+rfphon2   0          # Cancel default
+rfelfd2   2          # Calculate d/dk wave function only
+tolwfr2   1.0d-20
+
+#Set 3 : Response function calculation of Q=0 phonons and electric field pert.
+getddk3   2      # d/dk wave functions from last dataset
+kptopt3   2      # Modify default to use time-reversal symmetry
+rfelfd3   3      # Electric-field perturbation response only
+
+#Sets 4-10 : Finite-wave-vector phonon calculations (defaults for all datasets)
+kptopt   3          # Need full k-point set for finite-Q response
+rfphon   1          # Do phonon response
+rfatpol  1 9       # Treat displacements of all atoms
+rfdir   1 1 1      # Do all directions (symmetry will be used)
+tolvrs  1.0d-8     # This default is active for sets 3-10
+chkprim 0
+getwfk 1
+
+#qpt set
+nqpt 1
+qpt2   0 0 0
+qpt3   0 0 0
+qpt4   2.50000000E-01  0.00000000E+00  0.00000000E+00
+qpt5   5.00000000E-01  0.00000000E+00  0.00000000E+00
+qpt6   2.50000000E-01  2.50000000E-01  0.00000000E+00
+qpt7   5.00000000E-01  2.50000000E-01  0.00000000E+00
+qpt8  -2.50000000E-01  2.50000000E-01  0.00000000E+00
+qpt9   5.00000000E-01  5.00000000E-01  0.00000000E+00
+qpt10 -2.50000000E-01  5.00000000E-01  2.50000000E-01
+
+prtwf3 0
+prtwf4 0
+prtwf5 0
+prtwf6 0
+prtwf7 0
+prtwf8 0
+prtwf9 0
+prtwf10 0
